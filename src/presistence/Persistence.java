@@ -17,10 +17,12 @@ public class Persistence {
 		System.out.println();
 		try (FileReader reader = new FileReader(PATH_WORDS_TO_GUESS);
 				BufferedReader process = new BufferedReader(reader)) {
-			String line = process.readLine();
-			words = new Word[Integer.parseInt(line)];
-			while ((line = process.readLine()) != null) {
-				words[count] = new Word(line);
+			String word = process.readLine();
+			words = new Word[Integer.parseInt(word) - 1];
+			word = process.readLine();
+			String description = process.readLine();
+			while ((word = process.readLine()) != null && (description = process.readLine()) != null) {
+				words[count] = new Word(word, description);
 				count++;
 			}
 		} catch (IOException e) {
@@ -38,7 +40,7 @@ public class Persistence {
 			String line = process.readLine();
 			words = new Word[Integer.parseInt(line)];
 			while ((line = process.readLine()) != null) {
-				words[count] = new Word(line);
+				words[count] = new Word(line, "");
 				count++;
 			}
 		} catch (IOException e) {

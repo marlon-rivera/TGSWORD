@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
@@ -20,7 +21,7 @@ public class HowToPlayPanel extends JPanel {
 	private JTextArea rule;
 	private JTextArea color;
 	private JTextArea example;
-	private JButton exit;
+	private LetterIconButton exit;
 	private JTextArea positionCorrect;
 	private JLabel positionCorrectImg;
 	private JTextArea regularPosition;
@@ -36,12 +37,19 @@ public class HowToPlayPanel extends JPanel {
 	}
 
 	private void initComponents(ActionListener listener) {
+//		this.setLayout(null);
+		
+		
+//		this.add(exit).setBounds(3, this.getWidth() - exit.getWidthButton() - 3, exit.getWidthButton(), exit.getHeigthButton());
+		
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.WHITE);
 		
 		gbc = new GridBagConstraints();
 		
 		aux = new JLabel(" ");
+		
+		exit = new LetterIconButton(new ImageIcon("images/exit.png"), listener, "exit", 50, 20, true);
 		
 		attemps = new JTextArea("Tienes 6 intentos para adivinar la Palabra.");
 		attemps.setLineWrap(true);
@@ -51,7 +59,7 @@ public class HowToPlayPanel extends JPanel {
 		attemps.setSize(320, 50);
 		
 		rule = new JTextArea("Solo una palabra valida de n cantidad letras puede ser introducida"
-				+ " como una conjetura. Pulsa el boton con imagen de visto bueno \"\u2713:\"para comprobar tu conjetura.");
+				+ " como una conjetura. Pulsa el boton con imagen de visto bueno \"\u2713\" para comprobar tu conjetura.");
 		rule.setLineWrap(true);
 		rule.setEditable(false);
 		rule.setOpaque(false);
@@ -102,56 +110,74 @@ public class HowToPlayPanel extends JPanel {
 		imgScale = new ImageIcon(imaIncLet.getImage().getScaledInstance(150, 50, Image.SCALE_SMOOTH));
 		incorrectLetterImg = new JLabel(imgScale);
 		
-		this.add(attemps, gbc);
+		gbc.insets = new Insets(-35, -60, 0, 0);
+		gbc.anchor = GridBagConstraints.LINE_START;
+		this.add(exit, gbc);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridy = 1;
-		this.add(aux, gbc);
+		this.add(attemps, gbc);
 		gbc.gridy = 2;
-		this.add(rule, gbc);
+		this.add(aux, gbc);
 		gbc.gridy = 3;
+		this.add(rule, gbc);
 		aux = new JLabel(" ");
-		this.add(aux, gbc);
 		gbc.gridy = 4;
-		this.add(color, gbc);
+		this.add(aux, gbc);
 		gbc.gridy = 5;
+		this.add(color, gbc);
 		aux = new JLabel(" ");
-		this.add(aux, gbc);
 		gbc.gridy = 6;
-		this.add(example, gbc);
-		gbc.gridy = 7;
-		aux = new JLabel(" ");
 		this.add(aux, gbc);
+		gbc.gridy = 7;
+		this.add(example, gbc);
+		aux = new JLabel(" ");
 		gbc.gridy = 8;		
+		this.add(aux, gbc);
+		gbc.gridy = 9;
 		this.add(positionCorrect, gbc);
 		aux = new JLabel(" ");
-		gbc.gridy = 9;
-		this.add(aux, gbc);
 		gbc.gridy = 10;
-		this.add(positionCorrectImg, gbc);
+		this.add(aux, gbc);
 		gbc.gridy = 11;
+		this.add(positionCorrectImg, gbc);
 		aux = new JLabel(" ");
-		this.add(aux, gbc);
 		gbc.gridy = 12;
-		this.add(regularPosition, gbc);
+		this.add(aux, gbc);
 		gbc.gridy = 13;
+		this.add(regularPosition, gbc);
 		aux = new JLabel(" ");
-		this.add(aux, gbc);
 		gbc.gridy = 14;
-		this.add(regularPositionImg, gbc);
+		this.add(aux, gbc);
 		gbc.gridy = 15;
-		aux = new JLabel(" ");
-		this.add(aux, gbc);
+		this.add(regularPositionImg, gbc);
 		gbc.gridy = 16;
-		this.add(incorrectLetter, gbc);
-		gbc.gridy = 17;
-		aux = new JLabel(" ");
 		this.add(aux, gbc);
+		aux = new JLabel(" ");
+		gbc.gridy = 17;
+		this.add(incorrectLetter, gbc);
+		aux = new JLabel(" ");
 		gbc.gridy = 18;
+		this.add(aux, gbc);
+		gbc.gridy = 19;
 		this.add(incorrectLetterImg, gbc);	
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(Color.decode(""));
+		g2d.setColor(Color.decode("#9b9b9b"));
+		g2d.fillRect(0, 0, this.getWidth(), 25);
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(0, 25, this.getWidth(), this.getHeight());
+		super.paint(g);
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+//		Graphics2D g2d = (Graphics2D) g;
+//		g2d.setColor(Color.decode("#9b9b9b"));
+//		g2d.fillRect(0, 0, this.getWidth(), 25);
+//		super.paintComponent(g);
 	}
 }

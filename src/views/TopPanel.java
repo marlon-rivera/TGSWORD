@@ -49,6 +49,15 @@ public class TopPanel extends JPanel {
 		this.add(coinsTxt).setBounds(70, 0, 50, 50);
 		this.add(coinsImage).setBounds(10, 0, 50, 50);
 	}
+
+	public void setLevel(int level) {
+		levelImage.setText(String.valueOf(level));
+		repaint();
+	}
+	public void setCoins(int coins) {
+		coinsTxt.setText(String.valueOf(coins));
+		repaint();
+	}
 }
 
 class DragListener extends MouseInputAdapter {
@@ -70,4 +79,5 @@ class DragListener extends MouseInputAdapter {
 		int y = location.y - pressed.getY() + me.getY();
 		component.setLocation(x, y);
 	}
+	
 }

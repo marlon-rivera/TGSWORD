@@ -30,6 +30,15 @@ public class LetterButton extends JButton {
 		background = Color.decode("#9b9b9b");
 	
 	}
+	
+	public void setActionCommandButton(String command) {
+		this.setActionCommand(command);
+	}
+	
+	public void changeLetter(String text) {
+		letter = text;
+		repaint();
+	}
 
 	public int getWidthButton() {
 		return width;

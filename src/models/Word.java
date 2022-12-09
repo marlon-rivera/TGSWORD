@@ -3,9 +3,11 @@ package models;
 public class Word {
 
 	private String word;
-	
-	public Word(String word) {
+	private String description;
+
+	public Word(String word, String description) {
 		this.word = word;
+		this.description = description;
 	}
 
 	public String getWord() {
@@ -15,9 +17,18 @@ public class Word {
 	public void setWord(String word) {
 		this.word = word;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
-		return word;
+		return "Word [word=" + word + ", description=" + description + "]";
 	}
+
 }

@@ -8,10 +8,16 @@ public class WordManager {
 
 	private Word[] dictionaryWord;
 	private Word[] wordsToGuess;
-
+	private Player player;
+	
 	public WordManager() {
 		wordsToGuess = Persistence.getWordsToGuess();
 		dictionaryWord = Persistence.getDictionaryWords();
+		player = new Player();
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 
 	public Word getRandomWordToGuess() {
@@ -19,6 +25,8 @@ public class WordManager {
 	}
 
 	public ArrayList<Character> getCorrectLetters(String userWord, String realWord) {
+		realWord = realWord.toUpperCase();
+		userWord = userWord.toUpperCase();
 		ArrayList<Character> aux = new ArrayList<>();
 		for (int i = 0; i < realWord.length(); i++) {
 			if (userWord.charAt(i) == realWord.charAt(i)) {
@@ -29,6 +37,8 @@ public class WordManager {
 	}
 
 	public boolean[] getCorrectPositions(String userWord, String realWord) {
+		realWord = realWord.toUpperCase();
+		userWord = userWord.toUpperCase();
 		boolean[] positions = new boolean[realWord.length()];
 		for (int i = 0; i < realWord.length(); i++) {
 			if (userWord.charAt(i) == realWord.charAt(i)) {
@@ -39,6 +49,8 @@ public class WordManager {
 	}
 
 	public boolean[] getIncorrectPositions(String userWord, String realWord) {
+		realWord = realWord.toUpperCase();
+		userWord = userWord.toUpperCase();
 		boolean[] positions = new boolean[realWord.length()];
 		for (int i = 0; i < realWord.length(); i++) {
 			if (!contains(realWord, userWord.charAt(i))) {
@@ -49,6 +61,8 @@ public class WordManager {
 	}
 
 	public ArrayList<Character> getRegularLetters(String userWord, String realWord) {
+		realWord = realWord.toUpperCase();
+		userWord = userWord.toUpperCase();
 		boolean[] positions = getCorrectPositions(userWord, realWord);
 		ArrayList<Character> aux = new ArrayList<>();
 		for (int i = 0; i < realWord.length(); i++) {
@@ -112,6 +126,7 @@ public class WordManager {
 	}
 
 	public char getClue(char[] correctLetter, String realWord) {
+		realWord = realWord.toUpperCase();
 		if(correctLetter.length == realWord.length()) {
 			return ' ';
 		}

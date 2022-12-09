@@ -1,5 +1,6 @@
 package presenters;
 
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -7,6 +8,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JOptionPane;
+
+import models.Player;
 import models.Word;
 import models.WordManager;
 import views.FrameMain;
@@ -18,14 +22,18 @@ public class Presenter extends KeyAdapter implements ActionListener {
 	private WordManager manager;
 	private FrameMain frame;
 	private Word wordToGuess;
+	private Player player;
 	private static final String BACK_SPACE = "delete";
 	private static final String ENTER = "check";
+	private boolean buyDescription;
 
 	public Presenter() {
 		manager = new WordManager();
-//		wordToGuess = manager.getRandomWordToGuess();
-		wordToGuess = new Word("TEORIA");
-		frame = new FrameMain(this, this, wordToGuess.getWord().length());
+		wordToGuess = manager.getRandomWordToGuess();
+		player = manager.getPlayer();
+		System.out.println(wordToGuess);
+		frame = new FrameMain(this, this, wordToGuess.getWord().length(), player.getLevel(), player.getCoins(),
+				wordToGuess);
 	}
 
 	@Override
@@ -43,9 +51,9 @@ public class Presenter extends KeyAdapter implements ActionListener {
 		String command = "";
 		if (aux == KeyEvent.VK_BACK_SPACE) {
 			command = BACK_SPACE;
-		}else if(aux == KeyEvent.VK_ENTER){
+		} else if (aux == KeyEvent.VK_ENTER) {
 			command = ENTER;
-		}else {
+		} else {
 			command = String.valueOf(aux);
 		}
 		action(command);
@@ -53,6 +61,7 @@ public class Presenter extends KeyAdapter implements ActionListener {
 	}
 
 	private void action(String command) {
+		System.out.println(command);
 		switch (command) {
 		case "A":
 			if (wordToGuess.getWord().length() > column) {
@@ -191,24 +200,71 @@ public class Presenter extends KeyAdapter implements ActionListener {
 			break;
 		case "exitAll":
 			System.exit(0);
-			break;		
+			break;
 		case "check":
-			String wordUser = frame.getWordUser(row);
-			frame.setBackgroundColorTextFields(row, manager.getCorrectPositions(wordUser, wordToGuess.getWord()),
-					manager.getIncorrectPositions(wordUser, wordToGuess.getWord()));
-			frame.setColorLetters(wordUser, manager.getCorrectLetters(wordUser, wordToGuess.getWord()),
-					manager.getRegularLetters(wordUser, wordToGuess.getWord()));
-			row++;
-			frame.setRow(row);
-			column = 0;
+			check();
 			break;
 		case "clue":
-			char letter = manager.getClue(frame.getLettersCorrect(), wordToGuess.getWord());
-			frame.setColorClue(letter);
+			System.out.println(player.getCoins());
+			if (player.getCoins() >= 50) {
+				char letter = manager.getClue(frame.getLettersCorrect(), wordToGuess.getWord());
+				frame.setColorClue(letter);
+				player.setCoins(player.getCoins() - 50);
+				frame.setCoins(player.getCoins());
+			}
 			break;
 		case "howToPlay":
 			frame.showHowToPlayPanel();
 			break;
+		case "exit":
+			frame.hideHowToPlayPanel();
+			break;
+		case "accept":
+			accept();
+			break;
+		case "description":
+			if(buyDescription) {
+				frame.showDescriptionPanel(wordToGuess);
+			}else if (player.getCoins() >= 100) {
+				frame.showDescriptionPanel(wordToGuess);
+				player.setCoins(player.getCoins() - 100);
+				frame.setCoins(player.getCoins());
+				buyDescription = true;
+			}
+			break;
+		}
+	}
+
+	private void check() {
+		String wordUser = frame.getWordUser(row);
+		wordUser = wordUser.toUpperCase();
+		if (manager.existWord(wordUser)) {
+			if (wordToGuess.getWord().equalsIgnoreCase(wordUser)) {
+				frame.setBackgroundColorTextFields(row, manager.getCorrectPositions(wordUser, wordToGuess.getWord()),
+						manager.getIncorrectPositions(wordUser, wordToGuess.getWord()));
+				frame.setColorLetters(wordUser, manager.getCorrectLetters(wordUser, wordToGuess.getWord()),
+						manager.getRegularLetters(wordUser, wordToGuess.getWord()));
+				row = 0;
+				frame.setRow(row);
+			} else {
+				frame.setBackgroundColorTextFields(row, manager.getCorrectPositions(wordUser, wordToGuess.getWord()),
+						manager.getIncorrectPositions(wordUser, wordToGuess.getWord()));
+				frame.setColorLetters(wordUser, manager.getCorrectLetters(wordUser, wordToGuess.getWord()),
+						manager.getRegularLetters(wordUser, wordToGuess.getWord()));
+				row++;
+				frame.setRow(row);
+			}
+			column = 0;
+		} else {
+
+		}
+	}
+
+	private void accept() {
+		if (buyDescription) {
+			frame.hideDescriptionPanel();
+		} else {
+
 		}
 	}
 
