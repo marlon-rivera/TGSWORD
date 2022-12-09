@@ -41,6 +41,32 @@ public class InfoPanel extends JPanel{
 			}
 		}
 	}
+	
+	public String getWordUser(int row) {
+		String wordUser = "";
+		for (int i = 0; i < matrix.length; i++) {
+			wordUser += matrix[i][row].getText();
+		}
+		return wordUser;
+	}
+	
+	public void setBackgroundColor(int row, boolean[] positions, boolean[] incorrectPositions) {
+		for (int i = 0; i < positions.length; i++) {
+			if(positions[i] == true) {
+				matrix[i][row].setBackgroundColor(Color.decode("#00bb2d"));
+			}
+		}
+		for (int i = 0; i < incorrectPositions.length; i++) {
+			if(incorrectPositions[i] == true) {
+				matrix[i][row].setBackgroundColor(Color.BLACK);
+			}
+		}
+		for (int i = 0; i < matrix.length; i++) {
+			if(matrix[i][row].getBackgroundColor().equals(Color.decode("#9b9b9b"))) {
+				matrix[i][row].setBackgroundColor(Color.ORANGE);
+			}
+		}
+	}
 
 	public int getRow() {
 		return row;

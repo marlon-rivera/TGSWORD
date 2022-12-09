@@ -18,8 +18,6 @@ public class LetterButton extends JButton {
 	private int width;
 	private int height;
 	private Color background;
-	private Color backgroundColorP;
-	private Color backgroundColorS;
 
 	public LetterButton(int numberLetter, int width, int height, ActionListener listener) {
 		this.width = width;
@@ -29,25 +27,8 @@ public class LetterButton extends JButton {
 		this.setActionCommand(letter);
 		this.addActionListener(listener);
 		this.setFocusPainted(false);
-		backgroundColorP = Color.decode("#9fd5d1");
-		backgroundColorS = Color.decode("#9ce9fd");
-		background = backgroundColorP;
-		this.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (isEnabled()) {
-					background = backgroundColorS;
-				}
-				repaint();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				background = backgroundColorP;
-				repaint();
-			}
-		});
+		background = Color.decode("#9b9b9b");
+	
 	}
 
 	public int getWidthButton() {
@@ -65,17 +46,25 @@ public class LetterButton extends JButton {
 	public void setHeightButton(int height) {
 		this.height = height;
 	}
+	
+	public Color getBackgroundColor() {
+		return background;
+	}
 
 	private void paintLetter(Graphics g) {
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("Segoe UI Black", Font.PLAIN, 17));
 		g.drawString(letter, 7, 20);
+	}
+	
+	public void setBackgroundColor(Color color) {
+		background = color;
+		repaint();
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-//		super.paintComponent(g);
 		this.setBorderPainted(false);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(Color.BLACK);

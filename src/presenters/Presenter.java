@@ -11,7 +11,7 @@ import models.Word;
 import models.WordManager;
 import views.FrameMain;
 
-public class Presenter extends KeyAdapter implements ActionListener, ItemListener {
+public class Presenter extends KeyAdapter implements ActionListener {
 
 	private int column;
 	private int row;
@@ -19,11 +19,12 @@ public class Presenter extends KeyAdapter implements ActionListener, ItemListene
 	private FrameMain frame;
 	private Word wordToGuess;
 	private static final String BACK_SPACE = "delete";
+	private static final String ENTER = "check";
 
 	public Presenter() {
 		manager = new WordManager();
 //		wordToGuess = manager.getRandomWordToGuess();
-		wordToGuess = new Word("HOLA");
+		wordToGuess = new Word("TEORIA");
 		frame = new FrameMain(this, this, wordToGuess.getWord().length());
 	}
 
@@ -40,8 +41,10 @@ public class Presenter extends KeyAdapter implements ActionListener, ItemListene
 			aux = Character.toUpperCase(aux);
 		}
 		String command = "";
-		if(aux == KeyEvent.VK_BACK_SPACE) {
+		if (aux == KeyEvent.VK_BACK_SPACE) {
 			command = BACK_SPACE;
+		}else if(aux == KeyEvent.VK_ENTER){
+			command = ENTER;
 		}else {
 			command = String.valueOf(aux);
 		}
@@ -182,23 +185,34 @@ public class Presenter extends KeyAdapter implements ActionListener, ItemListene
 			}
 			break;
 		case BACK_SPACE:
-			if(column > 0) {				
+			if (column > 0) {
 				frame.setTextMatrixInPosition("", --column);
 			}
 			break;
 		case "exitAll":
 			System.exit(0);
+			break;		
+		case "check":
+			String wordUser = frame.getWordUser(row);
+			frame.setBackgroundColorTextFields(row, manager.getCorrectPositions(wordUser, wordToGuess.getWord()),
+					manager.getIncorrectPositions(wordUser, wordToGuess.getWord()));
+			frame.setColorLetters(wordUser, manager.getCorrectLetters(wordUser, wordToGuess.getWord()),
+					manager.getRegularLetters(wordUser, wordToGuess.getWord()));
+			row++;
+			frame.setRow(row);
+			column = 0;
+			break;
+		case "clue":
+			char letter = manager.getClue(frame.getLettersCorrect(), wordToGuess.getWord());
+			frame.setColorClue(letter);
+			break;
+		case "howToPlay":
+			frame.showHowToPlayPanel();
 			break;
 		}
 	}
 
 	public static void main(String[] args) {
 		new Presenter();
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

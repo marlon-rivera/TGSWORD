@@ -16,13 +16,19 @@ public class TextFieldRound extends JTextField {
 		setOpaque(false);
 		this.setEditable(false);
 		this.addKeyListener(listener);
-		background = new Color(0, 0, 0, 30);
+		background = Color.decode("#9b9b9b");
 		this.setHorizontalAlignment(CENTER);
-		this.setFont(new Font("ARIAL", Font.PLAIN, this.getFont().getSize()));
+		this.setFont(new Font("Segoe UI Black", Font.PLAIN, this.getFont().getSize()));
+		this.setForeground(Color.WHITE);
 	}
 
 	public void setBackgroundColor(Color color) {
 		background = color;
+		repaint();
+	}
+	
+	public Color getBackgroundColor() {
+		return background;
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -32,7 +38,7 @@ public class TextFieldRound extends JTextField {
 	}
 
 	protected void paintBorder(Graphics g) {
-		g.setColor(getForeground());
+		g.setColor(new Color(51, 51, 51));	
 		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
 	}
 }

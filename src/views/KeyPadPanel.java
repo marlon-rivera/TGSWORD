@@ -27,6 +27,60 @@ public class KeyPadPanel extends JPanel {
 			count++;
 		}
 	}
+	
+	public void setColorLetters(String word, ArrayList<Character> positions, ArrayList<Character> positionsRegular) {
+		//Pintar posiciones correctas
+		for (int i = 0; i < letters.size(); i++) {
+			for (int j = 0; j < positions.size(); j++) {
+				if(letters.get(i).getActionCommand().equalsIgnoreCase(String.valueOf(positions.get(j)))) {
+					letters.get(i).setBackgroundColor(Color.decode("#00bb2d"));
+				}
+			}
+		}
+		//Pintar posiciones regulares
+		for (int i = 0; i < letters.size(); i++) {
+			for (int j = 0; j < positionsRegular.size(); j++) {
+				if(letters.get(i).getActionCommand().equalsIgnoreCase(String.valueOf(positionsRegular.get(j)))) {
+					letters.get(i).setBackgroundColor(Color.ORANGE);
+				}
+			}
+		}
+		//Pintar posiciones mal
+		for (int i = 0; i < word.length(); i++) {
+			for (int j = 0; j < letters.size(); j++) {
+				if(letters.get(j).getActionCommand().equalsIgnoreCase(String.valueOf(word.charAt(i)))) {
+					if(letters.get(j).getBackgroundColor().equals(Color.decode("#9b9b9b"))) {
+						letters.get(j).setBackgroundColor(Color.BLACK);
+					}
+				}
+			}
+		}
+	}
+	
+	public char[] getLettersCorrect() {
+		char[] aux = null;
+		ArrayList<Character> lettersCorrect = new ArrayList<>();
+		for (int i = 0; i < letters.size(); i++) {
+			if(letters.get(i).getBackgroundColor().equals(Color.decode("#00bb2d"))) {
+				lettersCorrect.add(letters.get(i).getActionCommand().charAt(0));
+			}
+		}
+		aux = new char[lettersCorrect.size()];
+		for (int i = 0; i < aux.length; i++) {
+			aux[i] = lettersCorrect.get(i);
+		}
+		return aux;
+	}
+	
+	public void setColorClue(char letter) {
+		for (int i = 0; i < letters.size(); i++) {
+			if(letters.get(i).getActionCommand().charAt(0) == letter) {
+				letters.get(i).setBackgroundColor(Color.decode("#00bb2d"));
+				return;
+			}
+		}
+	}
+	
 
 	private void initComponents(ActionListener listener) {
 		fillLetters(listener);
@@ -70,4 +124,5 @@ public class KeyPadPanel extends JPanel {
 		this.add(letters.get(12)).setBounds(35 + (widthButton * 7), 30 + (heightButton * 2), widthButton, heightButton);
 		this.add(deleteLetter).setBounds(40 + (widthButton * 8), 30 + (heightButton * 2), widthButton, heightButton);
 	}
+
 }
