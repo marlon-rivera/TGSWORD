@@ -31,9 +31,6 @@ public class KeyPadPanel extends JPanel {
 	public void setColorLetters(String word, ArrayList<Character> positions, ArrayList<Character> positionsRegular) {
 		//Pintar posiciones correctas
 		word = word.toUpperCase();
-		for (Character character : positions) {
-			System.out.println(character);
-		}
 		for (int i = 0; i < letters.size(); i++) {
 			for (int j = 0; j < positions.size(); j++) {
 				if(letters.get(i).getActionCommand().equalsIgnoreCase(String.valueOf(positions.get(j)))) {
@@ -58,6 +55,12 @@ public class KeyPadPanel extends JPanel {
 					}
 				}
 			}
+		}
+	}
+	
+	public void resetColor() {
+		for (LetterButton letterButton : letters) {
+			letterButton.setBackgroundColor(Color.decode("#9b9b9b"));
 		}
 	}
 	

@@ -18,7 +18,7 @@ public class FrameMain extends JFrame {
 	private OptionsPanel optionsPanel;
 	private HowToPlayPanel howToPlay;
 	private DescriptionPanel descriptionPanel;
-	
+
 	public FrameMain(ActionListener listener, KeyListener keyListener, int columns, int level, int coins, Word word) {
 		this.setTitle("WG - TGS");
 		this.setSize(350, 500);
@@ -41,7 +41,8 @@ public class FrameMain extends JFrame {
 		topPanel.setCoins(coins);
 	}
 
-	private void initComponents(ActionListener listener, KeyListener keyListener, int columns, int level, int coins, Word word) {
+	private void initComponents(ActionListener listener, KeyListener keyListener, int columns, int level, int coins,
+			Word word) {
 		this.setLayout(null);
 
 		keyPadPanel = new KeyPadPanel(listener);
@@ -74,8 +75,8 @@ public class FrameMain extends JFrame {
 		keyPadPanel.setVisible(true);
 		howToPlay.setVisible(false);
 	}
-	
-	public void showDescriptionPanel(Word word) {
+
+	public void showDescriptionPanel() {
 		descriptionPanel.repaint();
 		topPanel.setVisible(false);
 		optionsPanel.setVisible(false);
@@ -85,7 +86,7 @@ public class FrameMain extends JFrame {
 		descriptionPanel.setVisible(true);
 		this.repaint();
 	}
-	
+
 	public void hideDescriptionPanel() {
 		topPanel.setVisible(true);
 		optionsPanel.setVisible(true);
@@ -120,5 +121,26 @@ public class FrameMain extends JFrame {
 
 	public void setRow(int row) {
 		infoPanel.setRow(row);
+	}
+
+	public void resetAll() {
+		keyPadPanel.resetColor();
+		infoPanel.resetColor();
+	}
+
+	public void setColumns(ActionListener listener, KeyListener keyListener, int columns, int level, Word word, int coins) {
+		hideDescriptionPanel();
+		topPanel.setVisible(false);
+		optionsPanel.setVisible(false);
+		infoPanel.setVisible(false);
+		keyPadPanel.setVisible(false);
+		infoPanel = null;
+		descriptionPanel = null;
+		topPanel = null;
+		descriptionPanel = null;
+		
+		removeAll();
+		initComponents(listener, keyListener, columns, level, coins, word);
+		repaint();
 	}
 }

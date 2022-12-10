@@ -3,7 +3,7 @@ Abierto
 Aquel sistema en el cual intervienen seres vivos, los cuales se relacionan de manera intima con el medio ambiente que los rodea, del mismoo modo el medio ambiente incide en dicho sistema y ambos actuan mutuamente, dependen uno del otro pero a su vez ambos se benefician
 Aristoteles
 'El todo es mas que la suma de sus partes'
-Beer 
+Beer
 Taxonomia que define un Sistema viable como aquel que es capaz de adaptarse al cambio medio en cambio, para que esto pueda ocurrir debe poseer tres caracteristicas basicas: ser capaz de auto organizarse, mantener una estructura constante y modificarla de acuerdo a las exigencias (Equlibrio)
 Bertalanffy
 Padre de la Teoria General de Sistemas, el cual propone un modelo de Sistema General que sea compatible con otros modelos de distintas disciplinas, es decir que tenga mismas caracteristicas, aun cuando las disciplinas sean totalmente diferentes

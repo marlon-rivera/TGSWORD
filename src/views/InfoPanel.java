@@ -13,9 +13,11 @@ public class InfoPanel extends JPanel{
 
 	private TextFieldRound[][] matrix;
 	private GridBagConstraints gbc;
+	private int columns;
 	private int row;
 	
 	public InfoPanel(ActionListener listner, KeyListener keyListener, int columns) {
+		this.columns = columns;
 		this.setSize(350, 300);
 		this.setBackground(Color.WHITE);
 		initComponents(listner, keyListener, columns);
@@ -38,6 +40,15 @@ public class InfoPanel extends JPanel{
 				gbc.gridy = j;
 				matrix[i][j] = new TextFieldRound(10, listener);
 				this.add(matrix[i][j], gbc);
+			}
+		}
+	}
+	
+	public void resetColor() {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				matrix[i][j].setText("");
+				matrix[i][j].setBackgroundColor(Color.decode("#9b9b9b"));
 			}
 		}
 	}
@@ -76,6 +87,14 @@ public class InfoPanel extends JPanel{
 		this.row = row;
 	}
 	
+	public int getColumns() {
+		return columns;
+	}
+
+	public void setColumns(int columns) {
+		this.columns = columns;
+	}
+
 	public void setTextMatrixInPosition(String letter, int column) {
 		matrix[column][row].setText(letter);
 	}

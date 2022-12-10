@@ -1,5 +1,6 @@
 package models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import presistence.Persistence;
@@ -138,5 +139,15 @@ public class WordManager {
 			}
 		}
 		return letter;
+	}
+	
+	public void increaseCoins(int delayedTime) {
+		if(delayedTime <= 45) {
+			player.setCoins(player.getCoins() + 200);
+		}else if(delayedTime > 45 && delayedTime <= 90) {
+			player.setCoins(player.getCoins() + 100);
+		}else {
+			player.setCoins(player.getCoins() + 25);
+		}
 	}
 }

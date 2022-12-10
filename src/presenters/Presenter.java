@@ -1,14 +1,12 @@
 package presenters;
 
-import java.awt.Insets;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
+import java.util.Timer;
 
 import models.Player;
 import models.Word;
@@ -26,6 +24,8 @@ public class Presenter extends KeyAdapter implements ActionListener {
 	private static final String BACK_SPACE = "delete";
 	private static final String ENTER = "check";
 	private boolean buyDescription;
+	private int delayedTime;
+	private boolean win;
 
 	public Presenter() {
 		manager = new WordManager();
@@ -34,6 +34,14 @@ public class Presenter extends KeyAdapter implements ActionListener {
 		System.out.println(wordToGuess);
 		frame = new FrameMain(this, this, wordToGuess.getWord().length(), player.getLevel(), player.getCoins(),
 				wordToGuess);
+		while (true) {
+			delayedTime++;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -61,7 +69,6 @@ public class Presenter extends KeyAdapter implements ActionListener {
 	}
 
 	private void action(String command) {
-		System.out.println(command);
 		switch (command) {
 		case "A":
 			if (wordToGuess.getWord().length() > column) {
@@ -223,10 +230,10 @@ public class Presenter extends KeyAdapter implements ActionListener {
 			accept();
 			break;
 		case "description":
-			if(buyDescription) {
-				frame.showDescriptionPanel(wordToGuess);
-			}else if (player.getCoins() >= 100) {
-				frame.showDescriptionPanel(wordToGuess);
+			if (buyDescription) {
+				frame.showDescriptionPanel();
+			} else if (player.getCoins() >= 100) {
+				frame.showDescriptionPanel();
 				player.setCoins(player.getCoins() - 100);
 				frame.setCoins(player.getCoins());
 				buyDescription = true;
@@ -246,7 +253,22 @@ public class Presenter extends KeyAdapter implements ActionListener {
 						manager.getRegularLetters(wordUser, wordToGuess.getWord()));
 				row = 0;
 				frame.setRow(row);
+
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				frame.showDescriptionPanel();
+				manager.increaseCoins(delayedTime);
+				delayedTime = 0;
+				player.setLevel(player.getLevel() + 1);
+				frame.setCoins(player.getCoins());
+				frame.setLevel(player.getLevel());
+				player.addWordGuessed(wordToGuess);
+				win = true;
 			} else {
+				System.out.println("Entrohola");
 				frame.setBackgroundColorTextFields(row, manager.getCorrectPositions(wordUser, wordToGuess.getWord()),
 						manager.getIncorrectPositions(wordUser, wordToGuess.getWord()));
 				frame.setColorLetters(wordUser, manager.getCorrectLetters(wordUser, wordToGuess.getWord()),
@@ -263,8 +285,28 @@ public class Presenter extends KeyAdapter implements ActionListener {
 	private void accept() {
 		if (buyDescription) {
 			frame.hideDescriptionPanel();
+			if (win) {
+				win = false;
+				delayedTime = 0;
+				buyDescription = false;
+				wordToGuess = manager.getRandomWordToGuess();
+				frame.dispose();
+				frame = null;
+				frame = new FrameMain(this, this, wordToGuess.getWord().length(), player.getLevel(), player.getCoins(),
+						wordToGuess);
+				System.out.println(wordToGuess);
+			}
 		} else {
-
+			frame.hideDescriptionPanel();
+			delayedTime = 0;
+			win = false;
+			buyDescription = false;
+			wordToGuess = manager.getRandomWordToGuess();
+			frame.dispose();
+			frame = null;
+			frame = new FrameMain(this, this, wordToGuess.getWord().length(), player.getLevel(), player.getCoins(),
+					wordToGuess);
+			System.out.println(wordToGuess);
 		}
 	}
 
