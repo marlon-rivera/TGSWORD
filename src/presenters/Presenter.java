@@ -11,6 +11,7 @@ import java.util.Timer;
 import models.Player;
 import models.Word;
 import models.WordManager;
+import presistence.Persistence;
 import views.FrameMain;
 
 public class Presenter extends KeyAdapter implements ActionListener {
@@ -206,6 +207,7 @@ public class Presenter extends KeyAdapter implements ActionListener {
 			}
 			break;
 		case "exitAll":
+			Persistence.savePlayer(player);
 			System.exit(0);
 			break;
 		case "check":

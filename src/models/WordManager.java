@@ -1,6 +1,5 @@
 package models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import presistence.Persistence;
@@ -14,7 +13,7 @@ public class WordManager {
 	public WordManager() {
 		wordsToGuess = Persistence.getWordsToGuess();
 		dictionaryWord = Persistence.getDictionaryWords();
-		player = new Player();
+		player = Persistence.retrievePlayer();
 	}
 	
 	public Player getPlayer() {

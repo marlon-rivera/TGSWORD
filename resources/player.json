@@ -1,0 +1,14 @@
+{
+  "level": 2,
+  "coins": 600,
+  "guessedWords": [
+    {
+      "word": "Complejidad",
+      "description": "Adjetivo que se aplica a un recorte de la realidad, de modoque un objeto de conocimiento es complejo para un sujeto cuando este no cuenta con las capacidades para interactuar con las relaciones de los componentes del sistema, "
+    },
+    {
+      "word": "Sistemico",
+      "description": "Pensamiento que permite estudiar la conexion que existe entre las diversas disciplinas para predecir el comportamiento de los sistemas. En modo de analisis evalua todas las partes que interactuan y que a su vez conforman una situacion hasta lograr una mayor conciencia de los suceso y el porque,"
+    }
+  ]
+}
